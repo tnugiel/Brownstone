@@ -286,3 +286,6 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+/BrownstoneAPI01
+/BrownstoneWWW01
+/BrownstoneWWW02
