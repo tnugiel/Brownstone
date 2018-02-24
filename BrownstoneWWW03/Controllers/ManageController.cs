@@ -65,7 +65,7 @@ namespace BrownstoneWWW03.Controllers
                 Username = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                PhoneNumber = user.PhoneNumber,
+                PhoneNumber = user.PhoneNumber, 
                 IsEmailConfirmed = user.EmailConfirmed,
                 StatusMessage = StatusMessage
             };
