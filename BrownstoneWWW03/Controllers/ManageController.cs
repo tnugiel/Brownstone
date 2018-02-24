@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using BrownstoneWWW03.Models;
 using BrownstoneWWW03.Models.ManageViewModels;
 using BrownstoneWWW03.Services;
+using BrownstoneWWW03.Data;
 
 namespace BrownstoneWWW03.Controllers
 {
@@ -20,6 +21,8 @@ namespace BrownstoneWWW03.Controllers
     [Route("[controller]/[action]")]
     public class ManageController : Controller
     {
+
+        private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
@@ -32,12 +35,14 @@ namespace BrownstoneWWW03.Controllers
         public ManageController(
           UserManager<ApplicationUser> userManager,
           SignInManager<ApplicationUser> signInManager,
+          ApplicationDbContext context,
           IEmailSender emailSender,
           ILogger<ManageController> logger,
           UrlEncoder urlEncoder)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
             _emailSender = emailSender;
             _logger = logger;
             _urlEncoder = urlEncoder;
@@ -58,7 +63,8 @@ namespace BrownstoneWWW03.Controllers
             var model = new IndexViewModel
             {
                 Username = user.UserName,
-                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber,
                 IsEmailConfirmed = user.EmailConfirmed,
                 StatusMessage = StatusMessage
@@ -82,25 +88,12 @@ namespace BrownstoneWWW03.Controllers
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            var email = user.Email;
-            if (model.Email != email)
-            {
-                var setEmailResult = await _userManager.SetEmailAsync(user, model.Email);
-                if (!setEmailResult.Succeeded)
-                {
-                    throw new ApplicationException($"Unexpected error occurred setting email for user with ID '{user.Id}'.");
-                }
-            }
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.PhoneNumber = model.PhoneNumber;
 
-            var phoneNumber = user.PhoneNumber;
-            if (model.PhoneNumber != phoneNumber)
-            {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, model.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
-                }
-            }
+            _context.Update<ApplicationUser>(user);
+            await _context.SaveChangesAsync();
 
             StatusMessage = "Your profile has been updated";
             return RedirectToAction(nameof(Index));

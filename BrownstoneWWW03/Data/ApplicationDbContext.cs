@@ -22,5 +22,7 @@ namespace BrownstoneWWW03.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+        public DbSet<BrownstoneWWW03.Models.Customer> Customer { get; set; }
     }
 }

@@ -11,9 +11,10 @@ using System;
 namespace BrownstoneWWW03.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180224213744_ApplicationOrganization")]
+    partial class ApplicationOrganization
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,8 +139,6 @@ namespace BrownstoneWWW03.Data.Migrations
                     b.Property<string>("Address2")
                         .HasMaxLength(80);
 
-                    b.Property<int>("ApplicationOrganizationID");
-
                     b.Property<string>("City")
                         .HasMaxLength(80);
 
@@ -164,8 +163,6 @@ namespace BrownstoneWWW03.Data.Migrations
                         .HasMaxLength(5);
 
                     b.HasKey("ID");
-
-                    b.HasIndex("ApplicationOrganizationID");
 
                     b.ToTable("Customer");
                 });
@@ -283,14 +280,6 @@ namespace BrownstoneWWW03.Data.Migrations
                     b.HasOne("BrownstoneWWW03.Models.ApplicationOrganization", "ApplicationOrganization")
                         .WithMany("ApplicationUsers")
                         .HasForeignKey("ApplicationOrganizationID");
-                });
-
-            modelBuilder.Entity("BrownstoneWWW03.Models.Customer", b =>
-                {
-                    b.HasOne("BrownstoneWWW03.Models.ApplicationOrganization", "ApplicationOrganization")
-                        .WithMany()
-                        .HasForeignKey("ApplicationOrganizationID")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

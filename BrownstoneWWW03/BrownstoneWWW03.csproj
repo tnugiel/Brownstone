@@ -5,6 +5,21 @@
     <UserSecretsId>aspnet-BrownstoneWWW03-394B4403-D78B-496F-8E84-7FC9F2587352</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20180222022322_Customers.cs" />
+    <Compile Remove="Data\Migrations\20180222022322_Customers.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180222024604_UpdateModels.cs" />
+    <Compile Remove="Data\Migrations\20180222024604_UpdateModels.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180222024658_Updates.cs" />
+    <Compile Remove="Data\Migrations\20180222024658_Updates.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180224212559_ApplicationOrganization.cs" />
+    <Compile Remove="Data\Migrations\20180224212559_ApplicationOrganization.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180224212846_ApplicationOrganization.cs" />
+    <Compile Remove="Data\Migrations\20180224212846_ApplicationOrganization.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180224213251_ApplicationOrganization.cs" />
+    <Compile Remove="Data\Migrations\20180224213251_ApplicationOrganization.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />

@@ -11,19 +11,22 @@ using System;
 namespace BrownstoneWWW03.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180222040250_CustomerMaxLength")]
+    partial class CustomerMaxLength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("BrownstoneWWW03.Models.ApplicationOrganization", b =>
+            modelBuilder.Entity("BrownstoneWWW03.Models.ApplicationUser", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
 
                     b.Property<string>("AccountNumber")
                         .HasMaxLength(80);
@@ -40,40 +43,11 @@ namespace BrownstoneWWW03.Data.Migrations
                     b.Property<string>("Company")
                         .HasMaxLength(80);
 
-                    b.Property<string>("Country")
-                        .HasMaxLength(80);
-
-                    b.Property<string>("EIN")
-                        .HasMaxLength(80);
-
-                    b.Property<string>("MerchantID")
-                        .HasMaxLength(80);
-
-                    b.Property<string>("PostalCode")
-                        .HasMaxLength(12);
-
-                    b.Property<string>("RouteNumber")
-                        .HasMaxLength(80);
-
-                    b.Property<string>("State")
-                        .HasMaxLength(5);
-
-                    b.HasKey("ID");
-
-                    b.ToTable("ApplicationOrganization");
-                });
-
-            modelBuilder.Entity("BrownstoneWWW03.Models.ApplicationUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<int?>("ApplicationOrganizationID");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
+
+                    b.Property<string>("Country")
+                        .HasMaxLength(80);
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
@@ -90,6 +64,9 @@ namespace BrownstoneWWW03.Data.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
+                    b.Property<string>("MerchantID")
+                        .HasMaxLength(80);
+
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
 
@@ -102,7 +79,16 @@ namespace BrownstoneWWW03.Data.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
+                    b.Property<string>("PostalCode")
+                        .HasMaxLength(12);
+
+                    b.Property<string>("RouteNumber")
+                        .HasMaxLength(80);
+
                     b.Property<string>("SecurityStamp");
+
+                    b.Property<string>("State")
+                        .HasMaxLength(5);
 
                     b.Property<bool>("TwoFactorEnabled");
 
@@ -110,8 +96,6 @@ namespace BrownstoneWWW03.Data.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationOrganizationID");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -138,8 +122,6 @@ namespace BrownstoneWWW03.Data.Migrations
                     b.Property<string>("Address2")
                         .HasMaxLength(80);
 
-                    b.Property<int>("ApplicationOrganizationID");
-
                     b.Property<string>("City")
                         .HasMaxLength(80);
 
@@ -164,8 +146,6 @@ namespace BrownstoneWWW03.Data.Migrations
                         .HasMaxLength(5);
 
                     b.HasKey("ID");
-
-                    b.HasIndex("ApplicationOrganizationID");
 
                     b.ToTable("Customer");
                 });
@@ -276,21 +256,6 @@ namespace BrownstoneWWW03.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("BrownstoneWWW03.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("BrownstoneWWW03.Models.ApplicationOrganization", "ApplicationOrganization")
-                        .WithMany("ApplicationUsers")
-                        .HasForeignKey("ApplicationOrganizationID");
-                });
-
-            modelBuilder.Entity("BrownstoneWWW03.Models.Customer", b =>
-                {
-                    b.HasOne("BrownstoneWWW03.Models.ApplicationOrganization", "ApplicationOrganization")
-                        .WithMany()
-                        .HasForeignKey("ApplicationOrganizationID")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
